@@ -7,33 +7,36 @@ use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+    // Exibir todos os produtos
     public function index()
     {
         return Produto::all();
     }
 
+    // Salvar um novo produto
     public function store(Request $request)
     {
-        $produto = Produto::create($request->all());
-        return response()->json($produto, 201);
+        return Produto::create($request->all());
     }
 
-    public function show($id)
+    // Exibir um produto específico
+    public function show(string $id)
     {
         return Produto::findOrFail($id);
     }
 
-    public function update(Request $request, $id)
+    // Atualizar um produto
+    public function update(Request $request, string $id)
     {
         $produto = Produto::findOrFail($id);
         $produto->update($request->all());
-        return response()->json($produto, 200);
+        return $produto;
     }
 
-    public function destroy($id)
+    // Excluir um produto
+    public function destroy(string $id)
     {
         Produto::destroy($id);
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }
-
